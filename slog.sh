@@ -61,9 +61,9 @@ prepare_log_for_nonterminal() {
 }
 
 log() {
-    local log_text="$1"
-    local log_level="$2"
-    local log_color="$3"
+    local log_text="${1?logging text must be provided}"
+    local log_level="${2:-INFO}"
+    local log_color="${3:-LOG_INFO_COLOR}"
 
     # Levels for comparing against LOG_LEVEL_STDOUT and LOG_LEVEL_LOG
     local LOG_LEVEL_DEBUG=0
@@ -71,10 +71,6 @@ log() {
     local LOG_LEVEL_SUCCESS=2
     local LOG_LEVEL_WARNING=3
     local LOG_LEVEL_ERROR=4
-
-    # Default level to "info"
-    [ -z ${log_level} ] && log_level="INFO";
-    [ -z ${log_color} ] && log_color="${LOG_INFO_COLOR}";
 
     # disable colors if unwanted
     [ -n "${LOG_DISABLE_COLOR:-}" ] && log_color=""
@@ -107,7 +103,7 @@ log() {
     # Check LOG_LEVEL_LOG to see if this level of entry goes to LOG_PATH
     if [ $log_level_log -le $log_level_int ]; then
         # LOG_PATH minus fancypants colors
-        if [ ! -z $LOG_PATH ]; then
+        if [ ! -z "${LOG_PATH:-}" ]; then
             printf "[$(date +"%Y-%m-%d %H:%M:%S %Z")] [${log_level}] ${log_text}\n" >> $LOG_PATH;
         fi
     fi
