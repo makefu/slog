@@ -111,12 +111,9 @@ log() {
     return 0;
 }
 
-log_info()      { log "$@"; }
-log_success()   { log "$1" "SUCCESS" "${LOG_SUCCESS_COLOR}"; }
-log_error()     { log "$1" "ERROR" "${LOG_ERROR_COLOR}"; }
-log_warning()   { log "$1" "WARNING" "${LOG_WARN_COLOR}"; }
-log_debug()     { log "$1" "DEBUG" "${LOG_DEBUG_COLOR}"; }
-
-# End Logging Section
-#--------------------------------------------------------------------------------------------------
-
+# i seriously do not care about the info util
+info()      { log "$@"; }
+success()   { log "$1" "SUCCESS" "${LOG_SUCCESS_COLOR}"; }
+error()     { log "$1" "ERROR" "${LOG_ERROR_COLOR}"; }
+warning()   { log "$1" "WARNING" "${LOG_WARN_COLOR}"; }
+debug()     { log "$1" "DEBUG" "${LOG_DEBUG_COLOR}"; }
