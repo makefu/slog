@@ -6,7 +6,7 @@
 # Licensed under the MIT license
 # http://github.com/swelljoe/slog
 #--------------------------------------------------------------------------------------------------
-set -e  # Fail on first error
+set -e  # Fail on first error, when sourcing this option will propagate
 
 # LOG_PATH - Define $LOG_PATH in your script to log to a file, otherwise
 # just writes to STDOUT.
@@ -34,7 +34,7 @@ fi
 
 #--------------------------------------------------------------------------------------------------
 # Begin Logging Section
-if [ "${INTERACTIVE_MODE}" = "off" ]
+if [ "${INTERACTIVE_MODE}" = "off"  ]
 then
     # Then we don't care about log colors
     LOG_DEFAULT_COLOR=""
@@ -75,6 +75,9 @@ log() {
     # Default level to "info"
     [ -z ${log_level} ] && log_level="INFO";
     [ -z ${log_color} ] && log_color="${LOG_INFO_COLOR}";
+
+    # disable colors if unwanted
+    [ -n "${LOG_DISABLE_COLOR:-}" ] && log_color=""
 
     # Validate LOG_LEVEL_STDOUT and LOG_LEVEL_LOG since they'll be eval-ed.
     case $LOG_LEVEL_STDOUT in
